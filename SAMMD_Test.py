@@ -103,7 +103,7 @@ data_trans_org = np.load('./Cifar10_adv.npy')
 
 # Extract semantic features from trained model
 
-x=data_trans_org.cuda()
+x=torch.from_numpy(data_trans_org).float().cuda()
 number=x.shape[0]
 bool_i=0
 with torch.no_grad():
