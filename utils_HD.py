@@ -110,7 +110,6 @@ def TST_MMD_adaptive_WB(Fea, N_per, N_te, sigma, sigma0, alpha, device, dtype):
     return bootsrap_null(N_te, N_per, Kx, Ky, Kxy, alpha, device, dtype)
 
 
-
 def SAMMD_WB(Fea, N_per, N_te, Fea_org, sigma, sigma0, epsilon, alpha, device, dtype):
 
     X = Fea[0:N_te, :] # fetch the sample 1 (features of deep networks)
@@ -125,97 +124,12 @@ def SAMMD_WB(Fea, N_per, N_te, Fea_org, sigma, sigma0, epsilon, alpha, device, d
     Dxx_org = Pdist2(X_org, X_org)
     Dyy_org = Pdist2(Y_org, Y_org)
     Dxy_org = Pdist2(X_org, Y_org)
-    #print(Dxx.shape)
-    #print(Dxx.median())
-    #print(Dxx.mean())
-    #print(Dxx_org.shape)
-    #print(Dxx_org.median())
-    #print(Dxx_org.mean())
 
     Kx = (1-epsilon) * torch.exp(-(Dxx / sigma0) -Dxx_org / sigma) + epsilon * torch.exp(-Dxx_org / sigma)
     Ky = (1-epsilon) * torch.exp(-(Dyy / sigma0) -Dyy_org / sigma) + epsilon * torch.exp(-Dyy_org / sigma)
     Kxy = (1-epsilon) * torch.exp(-(Dxy / sigma0) -Dxy_org / sigma) + epsilon * torch.exp(-Dxy_org / sigma)
 
     return bootsrap_null(N_te, N_per, Kx, Ky, Kxy, alpha, device, dtype)
-
-def TST_MMDD_WB(Fea, N_per, N_te, Fea_org, sigma, sigma0=0.1, epsilon = 10**(-10), alpha=0.05, device=torch.device("cuda:0"), dtype=torch.float, is_smooth=True, is_var_computed=True, use_1sample_U=True):
-    """compute value of deep-kernel MMD and std of deep-kernel MMD using merged data."""
-
-    X = Fea[0:N_te, :] # fetch the sample 1 (features of deep networks)
-    Y = Fea[N_te:, :] # fetch the sample 2 (features of deep networks)
-    X_org = Fea_org[0:N_te, :] # fetch the original sample 1
-    Y_org = Fea_org[N_te:, :] # fetch the original sample 2
-
-
-    L = 1 # generalized Gaussian (if L>1)
-    Dxx = Pdist2(X, X)
-    Dyy = Pdist2(Y, Y)
-    Dxy = Pdist2(X, Y)
-    Dxx_org = Pdist2(X_org, X_org)
-    Dyy_org = Pdist2(Y_org, Y_org)
-    Dxy_org = Pdist2(X_org, Y_org)
-
-
-    if is_smooth:
-
-        Kx = (1-epsilon) * torch.exp(-(Dxx / sigma0)**L -Dxx_org / sigma) + epsilon * torch.exp(-Dxx_org / sigma)
-        Ky = (1-epsilon) * torch.exp(-(Dyy / sigma0)**L -Dyy_org / sigma) + epsilon * torch.exp(-Dyy_org / sigma)
-        Kxy = (1-epsilon) * torch.exp(-(Dxy / sigma0)**L -Dxy_org / sigma) + epsilon * torch.exp(-Dxy_org / sigma)
-
-
-    else:
-        Kx = torch.exp(-Dxx / sigma0)
-        Ky = torch.exp(-Dyy / sigma0)
-        Kxy = torch.exp(-Dxy / sigma0)
-
-    return bootsrap_null(N_te, N_per, Kx, Ky, Kxy, alpha, device, dtype)
-
-def TST_WBMMD_M(Fea, N_per, N1, len_s, Fea1, Fea_org, sigma, sigma0=0.1, sigma1=0.1, coeff=0.5, epsilon = 10**(-10), alpha=0.05, device=torch.device("cuda:0"), dtype=torch.float, is_smooth=True, is_var_computed=True, use_1sample_U=True):
-    """compute value of deep-kernel MMD and std of deep-kernel MMD using merged data."""
-
-    X = Fea[0:len_s, :] # fetch the sample 1 (features of deep networks)
-    Y = Fea[len_s:, :] # fetch the sample 2 (features of deep networks)
-    X_org = Fea_org[0:len_s, :] # fetch the original sample 1
-    Y_org = Fea_org[len_s:, :] # fetch the original sample 2
-    X_fea1 = Fea1[0:len_s, :] # fetch the original sample 1
-    Y_fea1 = Fea1[len_s:, :] # fetch the original sample 2
-
-    L = 1 # generalized Gaussian (if L>1)
-    nx = X.shape[0]
-    ny = Y.shape[0]
-    Dxx = Pdist2(X, X)
-    Dyy = Pdist2(Y, Y)
-    Dxy = Pdist2(X, Y)
-    Dxx_org = Pdist2(X_org, X_org)
-    Dyy_org = Pdist2(Y_org, Y_org)
-    Dxy_org = Pdist2(X_org, Y_org)
-    Dxx_fea1 = Pdist2(X_fea1, X_fea1)
-    Dyy_fea1 = Pdist2(Y_fea1, Y_fea1)
-    Dxy_fea1 = Pdist2(X_fea1, Y_fea1)
-
-
-    K_Ix = torch.eye(nx).cuda()
-    K_Iy = torch.eye(ny).cuda()
-    if is_smooth:
-
-        #Kx = (1-epsilon) * torch.exp(-(Dxx / sigma0)**L -Dxx_org / sigma) + epsilon * torch.exp(-Dxx_org / sigma)
-        #Ky = (1-epsilon) * torch.exp(-(Dyy / sigma0)**L -Dyy_org / sigma) + epsilon * torch.exp(-Dyy_org / sigma)
-        #Kxy = (1-epsilon) * torch.exp(-(Dxy / sigma0)**L -Dxy_org / sigma) + epsilon * torch.exp(-Dxy_org / sigma)
-        
-        #Kx = (1-epsilon) * (torch.exp(-Dxx / sigma0 -Dxx_org / sigma)*coeff +torch.exp(-Dxx_fea1 / sigma1 -Dxx_org / sigma)*(1-coeff)) + epsilon * torch.exp(-Dxx_org / sigma)
-        #Ky = (1-epsilon) * (torch.exp(-Dyy / sigma0 -Dyy_org / sigma)*coeff +torch.exp(-Dyy_fea1 / sigma1 -Dyy_org / sigma)*(1-coeff)) + epsilon * torch.exp(-Dyy_org / sigma)
-        #Kxy = (1-epsilon) * (torch.exp(-Dxy / sigma0 -Dxy_org / sigma)*coeff +torch.exp(-Dxy_fea1 / sigma1 -Dxy_org / sigma)*(1-coeff)) + epsilon * torch.exp(-Dxy_org / sigma)
-        
-        Kx = torch.exp(-Dxx / sigma0 -Dxx_org / sigma)*coeff +torch.exp(-Dxx_fea1 / sigma1)*(1-coeff)
-        Ky = torch.exp(-Dyy / sigma0 -Dyy_org / sigma)*coeff +torch.exp(-Dyy_fea1 / sigma1)*(1-coeff)
-        Kxy = torch.exp(-Dxy / sigma0 -Dxy_org / sigma)*coeff +torch.exp(-Dxy_fea1 / sigma1)*(1-coeff)
-
-    else:
-        Kx = torch.exp(-Dxx / sigma0)
-        Ky = torch.exp(-Dyy / sigma0)
-        Kxy = torch.exp(-Dxy / sigma0)
-
-    return bootsrap_null(N1, N_per, Kx, Ky, Kxy, alpha, device, dtype)
 
 def TST_WBMMD_u(Fea, N_per, N1, Fea_org, sigma, sigma0, epsilon, alpha, device, dtype, is_smooth):
     """run two-sample test (TST) using deep kernel kernel."""
@@ -253,9 +167,7 @@ def h1_mean_var_gram(Kx, Ky, Kxy, is_var_computed, use_1sample_U=True):
     Kxyxy = torch.cat((Kxxy,Kyxy),0)
     nx = Kx.shape[0]
     ny = Ky.shape[0]
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!original True
     is_unbiased = True
-    #is_unbiased = False
     if is_unbiased:
         xx = torch.div((torch.sum(Kx) - torch.sum(torch.diag(Kx))), (nx * (nx - 1)))
         yy = torch.div((torch.sum(Ky) - torch.sum(torch.diag(Ky))), (ny * (ny - 1)))
