@@ -145,7 +145,7 @@ print(data_all.shape)
 for kk in range(K):
     torch.manual_seed(kk * 19 + N1)
     torch.cuda.manual_seed(kk * 19 + N1)
-    np.random.seed(seed=1102 * (kk + 10) + N1
+    np.random.seed(seed=1102 * (kk + 10) + N1)
 
     if cuda:
         adversarial_loss.cuda()
