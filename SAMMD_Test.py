@@ -8,8 +8,11 @@ from torch.utils.data import DataLoader
 from torchvision import datasets
 from torch.autograd import Variable
 import torch.nn as nn
+import torch.optim as optim
 import torch
+import torch.nn.functional as F
 from utils_HD import MatConvert, Pdist2, MMDu,SAMMD_WB
+from models import *
 
 # Setup seeds
 os.makedirs("images", exist_ok=True)
@@ -59,7 +62,26 @@ for i, (imgs, Labels) in enumerate(test_loader):
     Cifar_data_org = imgs
     label_all = Labels
 
-Cifar_data_all= np.load('./Semantic_Cifar10_natural.npy')
+# Extract semantic features from trained model
+model = semantic_ResNet18().cuda()    
+ckpt = torch.load('./net_150.pth') # trained model
+model.load_state_dict(ckpt)
+model.eval()    
+x=Cifar_data_org.cuda()
+number=x.shape[0]
+bool_i=0
+with torch.no_grad():
+    for batch_num in range(int(number/128)+1):
+        x_batch=x[128*batch_num:min(128*(batch_num+1),number)]
+        x_adv = model(x_batch)
+        if bool_i == 0:
+            X_adv = x_adv.clone().cpu()
+        else :
+            X_adv = torch.cat((X_adv, x_adv.clone().cpu()), 0)
+        bool_i +=1
+Cifar_data_all= X_adv.numpy()
+
+
 index=np.load('./True_Index.npy')
 Cifar_data_all=Cifar_data_all[index]
 Cifar_data_org=Cifar_data_org[index]
@@ -75,8 +97,27 @@ Ind_all = np.arange(len(data_all))
 Cifar_data_org = Cifar_data_org[ind_Cifar]
 data_org = Cifar_data_org[2000:]
 
-data_trans = np.load('./Semantic_Cifar10_adv.npy')
+
+
 data_trans_org = np.load('./Cifar10_adv.npy')
+
+# Extract semantic features from trained model
+
+x=data_trans_org.cuda()
+number=x.shape[0]
+bool_i=0
+with torch.no_grad():
+    for batch_num in range(int(number/128)+1):
+        x_batch=x[128*batch_num:min(128*(batch_num+1),number)]
+        x_adv = model(x_batch)
+        if bool_i == 0:
+            X_adv = x_adv.clone().cpu()
+        else :
+            X_adv = torch.cat((X_adv, x_adv.clone().cpu()), 0)
+        bool_i +=1
+data_trans= X_adv.numpy()
+
+
 
 ind_Cifar = np.random.choice(len(data_trans), len(data_trans), replace=False)
 data_trans = data_trans[ind_Cifar]
