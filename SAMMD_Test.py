@@ -9,7 +9,7 @@ from torchvision import datasets
 from torch.autograd import Variable
 import torch.nn as nn
 import torch
-from utils_HD import MatConvert, Pdist2, TST_MMD_adaptive_WB, MMDu,SAMMD_WB
+from utils_HD import MatConvert, Pdist2, MMDu,SAMMD_WB
 
 # Setup seeds
 os.makedirs("images", exist_ok=True)
