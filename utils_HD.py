@@ -224,7 +224,7 @@ def MMDu(Fea, len_s, Fea_org, sigma, sigma0=0.1, epsilon = 10**(-10), is_smooth=
         Ky = torch.exp(-Dyy / sigma0)
         Kxy = torch.exp(-Dxy / sigma0)
 
-    return h1_mean_var_gram(Kx, Ky, Kxy, is_var_computed, use_1sample_U
+    return h1_mean_var_gram(Kx, Ky, Kxy, is_var_computed, use_1sample_U)
 
 
 def MMDu_linear_kernel(Fea, len_s, is_var_computed=True, use_1sample_U=True):
