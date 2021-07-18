@@ -36,7 +36,7 @@ you can obtain a standard-trained model;
 
 2) run  
 ```
-python attack_generator.py  
+python adv_generator.py  
 ```
 you can attack the standard-trained model and obtain adversarial data by  FGSM, BIM, PGD and CW attack method.
 # Baselines
