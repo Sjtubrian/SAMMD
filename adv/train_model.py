@@ -79,7 +79,7 @@ parser.add_argument('--outf', default='./Res18_model', help='folder to output im
 args = parser.parse_args()
 
 # Hyperparameter setting
-EPOCH = 135   #Number of times to traverse the dataset
+EPOCH = 150   #Number of times to traverse the dataset
 pre_epoch = 0  #Defines the number of times a dataset has been traversed
 BATCH_SIZE = 128      #Batch size (batch size)
 LR = 0.01        #learning rate 
