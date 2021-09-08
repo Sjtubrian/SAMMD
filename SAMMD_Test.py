@@ -82,9 +82,9 @@ with torch.no_grad():
 Cifar_data_all= X_adv.numpy()
 
 
-index=np.load('./True_Index.npy')
-Cifar_data_all=Cifar_data_all[index]
-Cifar_data_org=Cifar_data_org[index]
+index=np.load('./True_Index.npy') #optional
+Cifar_data_all=Cifar_data_all[index] #optional 
+Cifar_data_org=Cifar_data_org[index] #optional 
 
 ind_Cifar = np.random.choice(len(Cifar_data_all), len(Cifar_data_all), replace=False)
 Cifar_data_all = Cifar_data_all[ind_Cifar]
