@@ -13,8 +13,6 @@ import os
 parser = argparse.ArgumentParser(description='PyTorch White-box Adversarial Attack Test')
 parser.add_argument('--net', type=str, default="resnet18", help="decide which network to use,choose from resnet18, resnet34")
 parser.add_argument('--dataset', type=str, default="cifar10", help="choose from cifar10,svhn")
-parser.add_argument('--depth', type=int, default=34, help='WRN depth')
-parser.add_argument('--width_factor', type=int, default=10,help='WRN width factor')
 parser.add_argument('--drop_rate', type=float,default=0.0, help='WRN drop rate')
 parser.add_argument('--attack_method', type=str,default="dat", help = "choose form: dat and trades")
 parser.add_argument('--model', default='./Res18_model/net_150.pth', help='model for white-box attack evaluation')
