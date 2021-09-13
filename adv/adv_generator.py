@@ -38,7 +38,7 @@ if args.net == "resnet34":
     model = ResNet34().cuda()
     net = "resnet34"
 
-model = torch.nn.DataParallel(model)
+
 ckpt = torch.load(args.model_path)
 model.load_state_dict(ckpt)
 
