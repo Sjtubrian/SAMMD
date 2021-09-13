@@ -104,8 +104,8 @@ testloader = torch.utils.data.DataLoader(testset, batch_size=128, shuffle=False,
 # train
 if __name__ == "__main__":
     # define-ResNet
-    net = ResNet34().to(device)
-    #net = ResNet18().to(device)
+    #net = ResNet34().to(device)
+    net = ResNet18().to(device)
 
     # Define loss functions and optimizations
     criterion = nn.CrossEntropyLoss()  
