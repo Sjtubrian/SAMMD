@@ -63,8 +63,8 @@ for i, (imgs, Labels) in enumerate(test_loader):
     label_all = Labels
 
 # Extract semantic features from trained model
-model = semantic_ResNet18().cuda()    
-ckpt = torch.load('./net_150.pth') # trained model
+model = semantic_ResNet18().cuda()  
+ckpt = torch.load('./adv/Adv_data/cifar10/RN18/net_150.pth') # download targeted model
 model.load_state_dict(ckpt)
 model.eval()    
 x=Cifar_data_org.cuda()
@@ -101,8 +101,8 @@ Cifar_data_org = Cifar_data_org[ind_Cifar]
 data_org = Cifar_data_org[2000:]
 
 
-
-data_trans_org = np.load('./Cifar10_adv.npy')
+#download adversarial data
+data_trans_org = np.load('./adv/Adv_data/cifar10/Adv_cifar_PGD20_eps8.npy')
 
 # Extract semantic features from trained model
 
