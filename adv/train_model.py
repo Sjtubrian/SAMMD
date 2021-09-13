@@ -114,7 +114,7 @@ if __name__ == "__main__":
     if not os.path.exists(args.outf):
         os.makedirs(args.outf)
     best_acc = 85  #2 initialize best test accuracy
-    print("Start Training, Resnet-34!")  
+    print("Start Training, Resnet-18!")  
     with open("acc.txt", "w") as f:
         with open("log.txt", "w")as f2:
             for epoch in range(pre_epoch, EPOCH):
