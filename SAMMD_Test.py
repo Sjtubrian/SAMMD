@@ -81,10 +81,13 @@ with torch.no_grad():
         bool_i +=1
 Cifar_data_all= X_adv.numpy()
 
-
-index=np.load('./True_Index.npy') #optional
-Cifar_data_all=Cifar_data_all[index] #optional 
-Cifar_data_org=Cifar_data_org[index] #optional 
+#True_Index only contains adversarial examples which can fool the targeted model.
+#optional
+#index=np.load('./True_Index.npy') 
+#optional 
+#Cifar_data_all=Cifar_data_all[index] 
+#optional 
+#Cifar_data_org=Cifar_data_org[index] 
 
 ind_Cifar = np.random.choice(len(Cifar_data_all), len(Cifar_data_all), replace=False)
 Cifar_data_all = Cifar_data_all[ind_Cifar]
