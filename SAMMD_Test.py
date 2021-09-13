@@ -255,7 +255,7 @@ for kk in range(K):
     # Print test power of SAMMD
     print("Reject rate_adaptive: ",H_adaptive.sum() / N_f)
 
-    Results[3, kk] = H_adaptive.sum() / N_f
+    Results[kk] = H_adaptive.sum() / N_f
 
     print("Test Power of Baselines (K times): ")
     print(Results)
