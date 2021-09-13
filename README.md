@@ -38,6 +38,10 @@ python train_model.py
 python adv_generator.py  
 ```
 you can obtain adversarial data by FGSM, BIM, PGD and CW attack method.
+
+We also provide some exampled trained models and adversarial data. Please download it:
+https://drive.google.com/drive/folders/1VtsGXeAKscUBiDT3ty7YxTb6UiHgZ9tu?usp=sharing
+
 # Baselines
 - MMD-G: MMD with a Gaussian kernel;  
 
