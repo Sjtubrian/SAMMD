@@ -49,7 +49,7 @@ adversarial_loss = torch.nn.CrossEntropyLoss()
 ep_OPT = np.zeros([K])
 s_OPT = np.zeros([K])
 s0_OPT = np.zeros([K])
-Results = np.zeros([7,K])
+Results = np.zeros([K])
 
 
 transform_test = transforms.Compose([transforms.ToTensor(),])
@@ -260,5 +260,5 @@ for kk in range(K):
     print("Test Power of Baselines (K times): ")
     print(Results)
     print("Average Test Power of SAMMD (K times): ")
-    print("SAMMD: ", (Results.sum(1) / (kk + 1))[3])
+    print("SAMMD: ", (Results.sum() / (kk + 1)))
 np.save('./Results_CIFAR10_' + str(N1) + 'SAMMD', Results)
