@@ -130,7 +130,7 @@ data_all=Cifar_data_all[2000:]
 Ind_all = np.arange(len(data_all))
 
 #download adversarial data
-data_trans_org = np.load('./adv/Adv_data/cifar10/Adv_cifar_PGD20_eps8.npy')
+data_trans = np.load('./adv/Adv_data/cifar10/Adv_cifar_PGD20_eps8.npy')
 ind_Cifar = np.random.choice(len(data_trans), len(data_trans), replace=False)
 data_trans = data_trans[ind_Cifar]
 
