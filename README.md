@@ -6,7 +6,7 @@ Hi, this is the pytorch code for Semantic-Aware Maximum Mean Discrepancy Test, p
 - Jingfeng Zhang (RIKEN), jingfeng.zhang@riken.jp  
 - Bo Han (HKBU), bhanml@comp.hkbu.edu.hk   
 - Tongliang Liu (USYD), tongliang.liu@sydney.edu.au  
-- Gang Niu (RIKEN), bhanml@comp.hkbu.edu.hk  
+- Gang Niu (RIKEN), gang.niu.ml@gmail.com  
 - Masashi Sugiyama (RIKEN, U-Tokyo), sugi@k.u-tokyo.ac.jp   
 # Software
 We recommend users to install python via Anaconda (python 3.7.3), which can be downloaded from https://www.anaconda.com/distribution/#download-section.  
