@@ -1,7 +1,7 @@
 # Maximum Mean Discrepancy Test is Aware of Adversarial Attacks
 Hi, this is the pytorch code for Semantic-Aware Maximum Mean Discrepancy Test, presented in the ICML2021 paper " Maximum Mean Discrepancy Test is Aware of Adversarial Attacks" (http://arxiv.org/abs/2010.11415). This work is done by  
 
-- Ruize Gao (HKBU,CUHK), ruizegao@cuhk.edu.hk  
+- Ruize Gao (HKBU,CUHK), ruizegao@comp.nus.edu.sg / sjtu16.brian.gao@gmail.com
 - Feng Liu (UTS), feng.liu@uts.edu.au  
 - Jingfeng Zhang (RIKEN), jingfeng.zhang@riken.jp  
 - Bo Han (HKBU), bhanml@comp.hkbu.edu.hk   
